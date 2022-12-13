@@ -1,0 +1,7 @@
+.clock{
+    flex: 1 1 300px;
+    height: 150px;
+    margin: 20px;
+    font-size: calc(20px);
+    color: white;
+}
