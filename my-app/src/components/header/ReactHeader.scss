@@ -1,0 +1,24 @@
+.AppHeader{
+display: flex;
+justify-content: space-between;
+text-align: right;
+background-color: #282c34;
+height: 65px;
+margin-bottom: 3px;
+padding-right: 50px;
+}
+
+.App-logo {
+height: 60px;
+pointer-events: none;
+}
+
+.header_title{ color: #fff; font-size: 35px; line-height: 70px;}
+
+@media (prefers-reduced-motion: no-preference) {
+.App-logo { animation: App-logo-spin infinite 20s linear; }
+}
+@keyframes App-logo-spin {
+from {transform: rotate(0deg);   }
+to {  transform: rotate(360deg); }
+}

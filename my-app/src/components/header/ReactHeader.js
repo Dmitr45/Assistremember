@@ -1,13 +1,18 @@
 // Вызов компонента функции rfc !!!!
 import React from 'react'
-import logo from './logo.svg';
-import Clock from './Clock/Clock';
+import App from '../../App';
+import logo from '../logo/logo.svg';
+import Clock from '../time/Clock';
+import './ReactHeader.css'
 
-export default function ReactHeader() {
+
+
+export default function ReactHeader(props) {
   return (
     <div className='AppHeader'>
       <Clock/>
-       <img src={logo} className="App-logo" alt="logo" />
+      <div className='header_title'> {props.title} </div>
+      <img src={logo} className="App-logo" alt="logo" />
     </div>       
   )
 }
