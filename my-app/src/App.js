@@ -21,7 +21,7 @@ tg.ready(); // Метод сообщает, что приложение полн
     <div>
     <ReactHeader title="AssistRemember"/>
     <main className='App-content _container'>
-    { /*  < TimeEvent/> */}
+      < TimeEvent/>
     <button onClick={onClose}>Закрыть</button>
     </main>
     </div>

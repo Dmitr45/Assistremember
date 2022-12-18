@@ -5,19 +5,23 @@
   background-color: #282c34;
   height: 65px;
   margin-bottom: 3px;
-  padding-right: 50px;
+  padding-right: 5px;
   border-bottom: 3px grey solid;
 }
 
 .App-logo {
   height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
   pointer-events: none;
 }
 
 .header_title {
   color: #fff;
-  font-size: 35px;
-  line-height: 70px;
+  font-size: 2rem;
+  line-height: 4rem;
+  margin-left: 15px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
