@@ -3,6 +3,11 @@ html {
   color: #fff;
 }
 
+body {
+  background: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
+}
+
 .App-content {
   margin: 0 auto;
 }

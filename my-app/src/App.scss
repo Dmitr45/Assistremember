@@ -1,5 +1,12 @@
 html { background-color: #282c34; color: #fff; }
+body {
+    background: var(--tg-theme-bg-color); // Зададим цвета комплиментарные теме пользователя в телеграмм 
+    color: var(--tg-theme-text-color);
+}
+
+
 
 .App-content { margin: 0 auto; }
 ._container{ width: 1000px; margin-top: 30px; }
 .link { color: #61dafb; }
+
