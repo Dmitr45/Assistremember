@@ -1,49 +1,24 @@
 .timeEvent_textarea {
   width: 100%;
-  height: 20px;
+  height: 50px;
   margin: 30px 0;
 }
 
-.button-timeDiapasonS {
+.button-timeDiapason {
+  padding: 3px;
+  border: 2px solid #000;
+  margin: 3px;
   display: inline-block;
-  width: 100px;
-  height: 50px;
+  width: 50px;
+  height: 40px;
   background-color: gray;
   color: #fff;
+  size: 0.7rem;
+  text-align: center;
   opacity: 0.8;
+  cursor: pointer;
 }
-.button-timeDiapasonS:hover, .button-timeDiapasonS:active {
-  line-height: 35px;
-  background-color: aqua;
-  color: #282c34;
-  opacity: 0.7;
-}
-
-.button-timeDiapasonM {
-  display: inline-block;
-  width: 100px;
-  height: 50px;
-  background-color: gray;
-  color: #fff;
-  opacity: 0.8;
-}
-.button-timeDiapasonM:hover, .button-timeDiapasonM:active {
-  line-height: 35px;
-  background-color: aqua;
-  color: #282c34;
-  opacity: 0.7;
-}
-
-.button-timeDiapasonH {
-  display: inline-block;
-  width: 100px;
-  height: 50px;
-  background-color: gray;
-  color: #fff;
-  opacity: 0.8;
-}
-.button-timeDiapasonH:hover, .button-timeDiapasonH:active {
-  line-height: 35px;
+.button-timeDiapason:hover {
   background-color: aqua;
   color: #282c34;
   opacity: 0.7;
@@ -75,4 +50,9 @@
 }
 .timer_clear:active {
   border: #282c34 3px solid;
+}
+
+.ticking {
+  text-align: "center";
+  font-size: 2rem;
 }

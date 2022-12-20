@@ -8,8 +8,9 @@ body {
 
 .App-content { margin: 0 auto; }
 ._container{ width: 1000px; margin-top: 30px; 
-@media (max-width: 400px) { width: 200px; } 
-
+    @media (max-width: 999px) { width: 500px; }
+    @media (max-width: 499px) { width: 300px; }
+    @media (max-width: 299px) { width: 250px; }
 }
 .link { color: #61dafb; }
 

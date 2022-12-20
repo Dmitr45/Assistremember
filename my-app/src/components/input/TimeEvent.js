@@ -4,47 +4,41 @@ import React from 'react'
 import './timeEvent.css'
 
 export default function TimeEvent() {
-    let tickingStyle = {textAlign: 'center', fontSize: 60};
-
     let textContent = {
-    titleSection : 'Таймер',
-    legend : 'Давайте запланируем напоминание!',
-    message : 'Твое время вышло:)',
+    titleSection: 'Таймер',
+    legend: 'Запланируем напоминание?',
+    legendRun: 'Напомню через: ',
+    message: 'Аууу! Время прошло!',
     label: 'Через сколько напомнить?',
-    button : 'Запустить таймер на: ',
+    button: 'Напомнить через: ',
     }
-
     let timeDiapason = {
-            Sec: [ 1, 5, 10, 15, 30, 40, 45],
-            Min: [ 1, 5, 10, 15, 30, 40, 45],
-            Hour: [ 1, 3, 6, 9, 12, 16, 24]
+            Sec: [ 1, 5, 10, 15],
+            Min: [ 1, 5, 10, 15],
+            Hour: [ 1, 3, 6, 9]
     }
 
-    let buttonsDiapasonesSec = timeDiapason.Sec.map( item => <button className='button-timeDiapasonS' onClick={()=>{ setTime(time+item); }}>+{item} Sec.</button>);
-    let buttonsDiapasonesMin = timeDiapason.Min.map( item => <button className='button-timeDiapasonM' onClick={()=>{ setTime(time+item*60); }}>+{item} Min.</button>);
-    let buttonsDiapasonesHour= timeDiapason.Hour.map( item =><button className='button-timeDiapasonH' onClick={()=>{ setTime(time+item*3600); }}>+{item} Hour</button>);
-
+    let buttonsDiapasonesSec = timeDiapason.Sec.map( item => <div className='button-timeDiapason'  onClick={()=>{ setTime(time+item); }}>+{item} <br/>Sec.</div>);
+    let buttonsDiapasonesMin = timeDiapason.Min.map( item => <div className='button-timeDiapason'  onClick={()=>{ setTime(time+item*60); }}>+{item} <br/>Min.</div>);
+    let buttonsDiapasonesHour= timeDiapason.Hour.map(item => <div className='button-timeDiapason'  onClick={()=>{ setTime(time+item*3600); }}>+{item} <br/>Hour</div>);
+    let value;
 
     let [message, setMessage] = React.useState(textContent.message);
     let [i,setI] = React.useState(0);
     let [tick,setTick] = React.useState(0);
-    const [time, setTime] = React. useState(0);
+    const [time, setTime] = React.useState(0);
     let [timeRemainder, setTimeRemainder] = React.useState( [ 0, 0, 0] );
-    // let [startTimer, setStartTimer] = React.useState(false);
+    let [startTimer, setStartTimer] = React.useState(false);
     //let [ticking, setTicking] = React.useState();
-    let value;
-
-    //if (tick == 0) { alert('Время пришло!!!')} ;
 
 React.useEffect(()=>{
-    if (tick >= 0) {    
-    console.clear()
-    console.log([message, time, i]);    
+    if (tick >= 0) {  
     let interval = setInterval(()=>{
     setTick(tick--);
     } , 1000);
     return  () => clearInterval(interval)
-} else if (tick < 0) {setTick(0)}
+} 
+    else if (tick < 0) {setTick(0)}
 });
 
 React.useEffect(()=>{
@@ -57,39 +51,70 @@ React.useEffect(()=>{
 }, [tick]);
 
 let Time = (timeRemainder, tick, message)=> {
-
     return tick == 0 ? message : ( `${(timeRemainder[0]<10) ? "0" + timeRemainder[0]: timeRemainder[0]} :  ${(timeRemainder[1]<10) ? "0" + timeRemainder[1]: timeRemainder[1]}  : ${(timeRemainder[2]<10) ? "0" + timeRemainder[2]: timeRemainder[2]}`)
     }
+
+let onStartTimer = () => {
+    setStartTimer(true); 
+    setTick(time); 
+    console.clear(); 
+    console.log(`Запуск таймера`)
+};    
+
+let onClearTimer = () => {
+    console.clear(); 
+    setStartTimer(false); 
+    setTick(0); 
+    setTime(0); 
+    setTimeRemainder([0, 0, 0 ]); 
+    console.log(`Сброс таймера`)
+}; 
+
+let form_TimerForm = (startTimer)=> {
+    let formDisplay = 
+            <fieldset>
+                <legend>{textContent.legend}</legend>
+                <textarea name="message" value={value} className='timeEvent_textarea' placeholder='Текст напоминания'  onChange={(event)=>{setMessage(event.target.value)}} id='message'></textarea>
+                <br/>
+                <label>{textContent.label}
+                <br/>
+                <br/>
+                <div className='time_diapasones'>
+                    {buttonsDiapasonesHour}
+                    <br/>
+                    {buttonsDiapasonesMin}
+                    <br/>
+                    {buttonsDiapasonesSec}
+                <br/>
+                </div>
+                </label>
+                <button className='timer_run' onClick={()=>{onStartTimer()}}> 
+                    {textContent.button}  
+                    {Math.floor(time/3600)} час. {Math.floor(time/60)  -  (Math.floor(time/3600)*60)} мин. { time - (Math.floor(time/60) -  (Math.floor(time/3600))*60)*60 - Math.floor(time/3600)*3600} сек.
+                </button>
+                <button className='timer_clear' onClick={()=>{ onClearTimer()}}> 
+                Сброс таймера
+                </button>
+            </fieldset>;
+    let formHide =  
+        <fieldset>
+            <legend> {textContent.legendRun} </legend>    
+            <div className='ticking'>
+                {Time(timeRemainder, tick, message)}
+                <br/>
+            </div>
+            <button className='timer_clear' onClick={()=>{ onClearTimer()}}> 
+                Сброс таймера
+            </button>
+        </fieldset>;
+    return  startTimer?formHide:formDisplay;
+};
+
 
 
 return (
 <section>
     <h1>{textContent.titleSection}</h1>
-    <fieldset>
-    <legend>{textContent.legend}</legend>
-    <textarea name="message" value={value} className='timeEvent_textarea' placeholder='Текст напоминания'  onChange={(event)=>{setMessage(event.target.value)}} id='message'></textarea>
-    <br/>
-    <label>{textContent.label}
-    <br/>
-    <br/>
-    <div className='time_diapasones'>{buttonsDiapasonesHour}</div>
-    <br/>
-    <div className='time_diapasones'>{buttonsDiapasonesMin}</div>
-    <br/>
-    <div className='time_diapasones'>{buttonsDiapasonesSec}</div>
-    <br/>
-    </label>
-    <button className='timer_run' onClick={()=>{ console.clear(); setI(i++);   setTick(time); console.log(`Запуск таймера № ${i}`)}}> 
-        {textContent.button}  
-        {Math.floor(time/3600)} час. {Math.floor(time/60)  -  (Math.floor(time/3600)*60)} мин. { time - (Math.floor(time/60) -  (Math.floor(time/3600))*60)*60 - Math.floor(time/3600)*3600} сек.
-    </button>
-    <button className='timer_clear' onClick={()=>{ console.clear(); setI(i++);   setTick(0); setTime(0); setTimeRemainder([0, 0, 0 ]); console.log(`Сброс таймера № ${i}`)}}> 
-    Сброс таймера
-    </button>
-    </fieldset>
-    <h1 style={tickingStyle}>
-    {Time(timeRemainder, tick, message)}
-    <br/>
-    </h1>
+    {form_TimerForm(startTimer)}
 </section>
 )}

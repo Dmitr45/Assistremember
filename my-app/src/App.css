@@ -11,9 +11,19 @@ html {
   width: 1000px;
   margin-top: 30px;
 }
-@media (max-width: 400px) {
+@media (max-width: 999px) {
   ._container {
-    width: 200px;
+    width: 500px;
+  }
+}
+@media (max-width: 499px) {
+  ._container {
+    width: 300px;
+  }
+}
+@media (max-width: 299px) {
+  ._container {
+    width: 250px;
   }
 }
 
