@@ -1,7 +1,9 @@
 // Компонент для планированя времени сбытия (напоминания)
 
-import React from 'react'
-import './timeEvent.css'
+import React from 'react';
+import useSound from 'use-sound';
+import './timeEvent.css';
+import Booom from '../sound/ICQ.mp3';
 
 export default function TimeEvent() {
     let textContent = {
@@ -25,20 +27,23 @@ export default function TimeEvent() {
 
     let [message, setMessage] = React.useState(textContent.message);
     let [i,setI] = React.useState(0);
-    let [tick,setTick] = React.useState(0);
+    let [tick,setTick] = React.useState(null);
     const [time, setTime] = React.useState(0);
     let [timeRemainder, setTimeRemainder] = React.useState( [ 0, 0, 0] );
     let [startTimer, setStartTimer] = React.useState(false);
     //let [ticking, setTicking] = React.useState();
+    let [soundEnabledSwitch, setSoundEnabledSwitch] = React.useState(true);
+    const [stopSound, {setStopSound}] = useSound(Booom, {volume: 0.1, soundEnabled: soundEnabledSwitch, interrupt: false, playbackRate: 1 });
 
 React.useEffect(()=>{
     if (tick >= 0) {  
     let interval = setInterval(()=>{
     setTick(tick--);
     } , 1000);
+    if (tick === 1) { stopSound(); setSoundEnabledSwitch(false)}
     return  () => clearInterval(interval)
 } 
-    else if (tick < 0) {setTick(0)}
+    else if (tick < 0) {setTick(null)}
 });
 
 React.useEffect(()=>{
@@ -67,6 +72,7 @@ let onClearTimer = () => {
     setTick(0); 
     setTime(0); 
     setTimeRemainder([0, 0, 0 ]); 
+    setSoundEnabledSwitch(true)
     console.log(`Сброс таймера`)
 }; 
 
