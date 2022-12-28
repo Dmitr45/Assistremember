@@ -5,9 +5,9 @@ import useSound from 'use-sound';
 import './timeEvent.css';
 import Booom from '../sound/ICQ.mp3';
 
-export default function TimeEvent() {
+export default function TimeEvent(props) {
     let textContent = {
-    titleSection: 'Таймер',
+    titleSection: `Таймеp №${props.Index}  ${props.Name} `,
     legend: 'Запланируем напоминание?',
     legendRun: 'Напомню через: ',
     message: 'Аууу! Время прошло!',
@@ -39,7 +39,7 @@ React.useEffect(()=>{
     if (tick >= 0) {  
     let interval = setInterval(()=>{
     setTick(tick--);
-    } , 1000);
+    } , 500);
     if (tick === 1) { stopSound(); setSoundEnabledSwitch(false)}
     return  () => clearInterval(interval)
 } 

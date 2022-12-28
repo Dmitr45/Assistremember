@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import './App.css';
 import ReactHeader from  './components/header/ReactHeader';
-import TimeEvent from './components/input/TimeEvent';
+import Timer from './components/timer/Timer';
+
 //import axios from 'axios';
 const tg = window.Telegram.WebApp;
 
@@ -21,7 +22,7 @@ tg.ready(); // Метод сообщает, что приложение полн
     <div>
     <ReactHeader title="AssistRemember"/>
     <main className='App-content _container'>
-      < TimeEvent/>
+      < Timer/>
     {/*<button onClick={onClose}>Закрыть</button>*/}
     </main>
     </div>
