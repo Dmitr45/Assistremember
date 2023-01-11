@@ -27,49 +27,57 @@ export default function TimeEvent(props) {
 
     let [message, setMessage] = React.useState(textContent.message);
     let [i,setI] = React.useState(0);
-    let [tick,setTick] = React.useState(null);
+    let [deltaTime,setDeltaTime] = React.useState(null);
     const [time, setTime] = React.useState(0);
     let [timeRemainder, setTimeRemainder] = React.useState( [ 0, 0, 0] );
     let [startTimer, setStartTimer] = React.useState(false);
+    let [timeStartTimer, setTimeStartTimer] = React.useState(0);
+    let [timeStopTimer, setTimeStopTimer] = React.useState(0);
     //let [ticking, setTicking] = React.useState();
     let [soundEnabledSwitch, setSoundEnabledSwitch] = React.useState(true);
     const [stopSound, {setStopSound}] = useSound(Booom, {volume: 0.1, soundEnabled: soundEnabledSwitch, interrupt: false, playbackRate: 1 });
 
 React.useEffect(()=>{
-    if (tick >= 0) {  
+    let date = new Date();
+    console.clear();
+    console.log(`Время пошло:  ${timeStopTimer - date} `)
+    if (deltaTime >= 0) {  
     let interval = setInterval(()=>{
-    setTick(tick--);
+    setDeltaTime((timeStopTimer - date)/1000);
     } , 500);
-    if (tick === 1) { stopSound(); setSoundEnabledSwitch(false)}
+    if (Math.floor(deltaTime) === 1) { stopSound(); setSoundEnabledSwitch(false)}
     return  () => clearInterval(interval)
 } 
-    else if (tick < 0) {setTick(null)}
+    else if (deltaTime < 0) {setDeltaTime(null)}
 });
 
 React.useEffect(()=>{
     setTimeRemainder([
-    Math.floor(tick/3600),
-    Math.floor(tick/60)  -  (Math.floor(tick/3600)*60),
-    tick - (Math.floor(tick/60) -  (Math.floor(tick/3600))*60)*60 - Math.floor(tick/3600)*3600,
+    Math.floor(deltaTime/3600),
+    Math.floor(deltaTime/60)  -  (Math.floor(deltaTime/3600)*60),
+    Math.floor(deltaTime) - (Math.floor(deltaTime/60) -  (Math.floor(deltaTime/3600))*60)*60 - Math.floor(deltaTime/3600)*3600,
             ]);
 
-}, [tick]);
+}, [deltaTime]);
 
-let Time = (timeRemainder, tick, message)=> {
-    return tick == 0 ? message : ( `${(timeRemainder[0]<10) ? "0" + timeRemainder[0]: timeRemainder[0]} :  ${(timeRemainder[1]<10) ? "0" + timeRemainder[1]: timeRemainder[1]}  : ${(timeRemainder[2]<10) ? "0" + timeRemainder[2]: timeRemainder[2]}`)
+let Time = (timeRemainder, deltaTime, message)=> {
+    return deltaTime == 0 ? message : ( `${(timeRemainder[0]<10) ? "0" + timeRemainder[0]: timeRemainder[0]} :  ${(timeRemainder[1]<10) ? "0" + timeRemainder[1]: timeRemainder[1]}  : ${(timeRemainder[2]<10) ? "0" + timeRemainder[2]: timeRemainder[2]}`)
     }
 
 let onStartTimer = () => {
+    let date = new Date();
     setStartTimer(true); 
-    setTick(time); 
+    setDeltaTime(time); 
+    setTimeStartTimer(date.getTime());
+    setTimeStopTimer(date.getTime() + time*1000);
     console.clear(); 
-    console.log(`Запуск таймера`)
+    console.log(`Запуск таймера! Время старта: ${date.getTime()}. Время остановки: ${date.getTime()+time*1000} Дельта времени: ${time*1000}` )
 };    
 
 let onClearTimer = () => {
     console.clear(); 
     setStartTimer(false); 
-    setTick(0); 
+    setDeltaTime(0); 
     setTime(0); 
     setTimeRemainder([0, 0, 0 ]); 
     setSoundEnabledSwitch(true)
@@ -106,7 +114,7 @@ let form_TimerForm = (startTimer)=> {
         <fieldset>
             <legend> {textContent.legendRun} </legend>    
             <div className='ticking'>
-                {Time(timeRemainder, tick, message)}
+                {Time(timeRemainder, deltaTime, message)}
                 <br/>
             </div>
             <button className='timer_clear' onClick={()=>{ onClearTimer()}}> 
